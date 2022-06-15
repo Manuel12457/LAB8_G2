@@ -23,7 +23,7 @@
                 <h1>Juego</h1>
             </div>
 
-            <form id="form" onsubmit="return validarForm()">
+<!--            <form id="form">-->
                 <div class="form-group">
                     <label for="nombre">Nombre</label>
                     <input type="text" class="form-control" id="nombre">
@@ -105,9 +105,9 @@
                 </div>
                 <div class="form-group">
                     <a href="#" class="btn btn-danger">Cancelar</a>
-                    <button class="btn btn-primary">Añadir</button> <!--type="submit"-->
+                    <button class="btn btn-primary" onclick="validarForm()">Añadir</button> <!--type="submit"-->
                 </div>
-            </form>
+<!--            </form>-->
             <div id="content">
                 <main>
                     <!-- Contenido -->
@@ -241,7 +241,7 @@
                     juegos.push(juego);
                     mostrarTabla();
                 }
-                return guardar;
+                // return guardar;
             }
 
             function mostrarTabla() {
