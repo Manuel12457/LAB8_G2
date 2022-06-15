@@ -21,24 +21,26 @@
                 <h1>Crud de Distribuidoras</h1>
             </div>
             <div class="container-fluid">
-                <form method="POST" class="row g-3" id="transactionForm">
-                    <div class="form-group">
+                <form id="form">
+                    <div class="form-group" style="margin-bottom: 30px">
                         <label>Nombre</label>
                         <input type="text" class="form-control" name="nombre" id="nombre">
                         <div class="invalid-feedback" id="alert-nombre" hidden >El nombre debe tener menos de 20 caracteres y mas de 3</div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" style="margin-bottom: 30px">
                         <label>Descripción</label>
                         <textarea class="form-control"  id="descripcion" name="descripcion"></textarea>
                         <div class="invalid-feedback" id="alert-descripcion" hidden>La descripcion debe tener menos de 512 caracteres y mas de 3</div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" style="margin-bottom: 30px">
                         <label>Web</label>
                         <input type="text" class="form-control" id="web" name="web">
                         <div class="invalid-feedback" id="alert-web" hidden>Deffault value</div>
                     </div>
-                    <div class="form-group">
-                        <button type="submit" class="btn btn-primary" th:text="${juego.idjuego == 0? 'Registrar' : 'Actualizar'}">Reg/act</button>
+                    <div class="form-group" style="margin-bottom: 30px">
+                        <a href="#" class="btn btn-danger" style="margin-right: 20px">Cancelar</a>
+                        <button type="submit" class="btn btn-primary">Añadir</button>
+                        <p id="success"></p>
                     </div>
                 </form>
                 <!--<a class="btn btn-primary mt-4 mb-4" href="@{/juegos/nuevo}"><span class="bi bi-plus-circle"></span> Nuevo Juego</a>1-->
@@ -72,18 +74,17 @@
     </div>
 </div>
 <script>
-    const form = document.getElementById("transactionForm");
-    form.addEventListener("submit",function(event){
-        event.preventDefault();
-        let data = new FormData(form);
-        let table = document.getElementById("datatable");
-        //validacion del formulario
-        var nombre = document.getElementById("nombre");
-        var descripcion = document.getElementById("descripcion");
-        var web = document.getElementById("web");
-        //validacion de expresion regular
-        var r = new RegExp(/(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/)
-        var ok = true;
+    var table = document.getElementById("datatable").value;
+    //validacion del formulario
+    var nombre = document.getElementById("nombre").value;
+    var descripcion = document.getElementById("descripcion").value;
+    var web = document.getElementById("web");
+    //validacion de expresion regular
+    var r = new RegExp(/(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/)
+    let ok = true;
+    const form = document.getElementById("form");
+    form.addEventListener("submit",e=>{
+        e.preventDefault();
         if(!(nombre.length>3 && nombre.length<20)){
             document.getElementById("alert-nombre").hidden="false";
             ok = false;
