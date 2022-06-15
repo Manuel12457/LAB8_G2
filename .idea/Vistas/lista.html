@@ -13,16 +13,57 @@
     <link href="http://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" type="text/css" /></head>
 <body>
 <div class='container container-app'>
+    <!-- Form -->
+    <form id="form">
+        <div class="form-group">
+            <label for="nombre">Nombre</label>
+            <input type="text" class="form-control"  id="nombre" >
+        </div>
+        <div class="form-group">
+            <label for="descripcion">Descripción</label>
+            <textarea class="form-control" id="descripcion" ></textarea>
+        </div>
+        <div class="form-group">
+            <label for="idgenero">Género</label>
+            <select class=" form-select" id="idgenero" >
+                <option value="-1">- Seleccione -</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="idplataforma">Plataforma</label>
+            <select class="form-select"  id="idplataforma" >
+                <option value="-1">- Seleccione -</option>
 
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="iddistribuidora">Distribuidora</label>
+            <select class="form-select"  id="iddistribuidora" >
+                <option value="-1">- Seleccione -</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Imagen URL</label>
+            <input type="text" class="form-control"  id="image" >
+        </div>
+        <div class="form-group">
+            <label>Precio</label>
+            <input type="text"   id="precio" >
+
+        </div>
+        <input type="hidden" th:field="*{idjuego}" />
+        <div class="form-group">
+            <a href="#" class="btn btn-danger">Cancelar</a>
+            <button type="submit" class="btn btn-primary">Reg/act</button>
+        </div>
+    </form>
     <div id="content">
         <main>
             <!-- Contenido -->
             <div class="page-header text-center">
-                <h1>Lista de Juegos para la Venta</h1>
+                <h1>Juego</h1>
             </div>
             <div class="container-fluid">
-
-                <a class="btn btn-primary mt-4 mb-4" href="@{/juegos/nuevo}"><span class="bi bi-plus-circle"></span> Nuevo Juego</a>1
                 <table class="table table-striped">
                     <thead>
                     <tr>
@@ -50,7 +91,7 @@
         <div class="container-fluid">
             <div class="d-flex align-items-center justify-content-between small">
                 <div class="text-muted">
-                    <span>|Colocar  # Grupo - PUCP @  ${year}|</span>
+                    <span>| 2 Grupo - PUCP @  2022|</span>
                 </div>
             </div>
         </div>
