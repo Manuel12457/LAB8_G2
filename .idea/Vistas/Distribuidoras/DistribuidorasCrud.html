@@ -97,10 +97,10 @@
     </div>
 </div>
 <script>
-    var table = document.getElementById("datatable").value;
+    var table = document.getElementById("datatable");
     //validacion del formulario
-    var nombre = document.getElementById("nombre").value;
-    var descripcion = document.getElementById("descripcion").value;
+    var nombre = document.getElementById("nombre");
+    var descripcion = document.getElementById("descripcion");
     var web = document.getElementById("web");
     //validacion de expresion regular
     var r = new RegExp(/(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/)
@@ -108,15 +108,15 @@
     const form = document.getElementById("form");
     form.addEventListener("submit",e=>{
         e.preventDefault();
-        if(nombre.length < 3 || nombre.length>20 || nombre===''){
+        if(nombre.length < 3 || nombre.length>20){
             document.getElementById("alert-nombre").innerText="El nombre debe de contener entre 3 y 20 caracteres";
             ok = false;
         }
-        if(descripcion.length < 3 || descripcion.length>512 || descripcion===''){
+        if(descripcion.length < 3 || descripcion.length>512){
             document.getElementById("alert-descripcion").innerText="El nombre debe de contener entre 3 y 512 caracteres";
             ok = false;
         }
-        if(web.length < 3 || web.length>256 || web===''){
+        if(web.length < 3 || web.length>256){
             document.getElementById("alert-web").innerText = "Debe ser menor a 256 caracteres y tiene que ser mayor a 3 caracteres";
             ok = false;
         }
@@ -127,12 +127,19 @@
         if(ok){
             //insercion dentro de la tabla
             let  newRow = table.insertRow(-1);
-            let celdaNombre = newRow.insertCell(0).textContent(nombre);
-            let celdaDescripcion = newRow.insertCell(1).textContent(descripcion);
-            let celdaWeb = newRow.insertCell(2).textContent(web);
+            let celdaNombre = newRow.insertCell(0)
+            let nombretexto = document.createTextNode(nombre);
+            celdaNombre.appendChild(nombretexto);
+            let celdaDescripcion = newRow.insertCell(1);
+            let nombreDescripcion = document.createTextNode(descripcion);
+            celdaNombre.appendChild(nombreDescripcion);
+            let celdaWeb = newRow.insertCell(2)
+            let nombreWeb = document.createTextNode(web);
+            celdaNombre.appendChild(nombreWeb);
             let celdaEdit = newRow.insertCell(3);
             celdaEdit.innerHTML = "<button type=\"button\" class=\"btn btn-danger\">Eliminar</button>"
-            celdaEdit.innerHTML = "<button type=\"button\" class=\"btn btn-info\">Editar</button>"
+            let celdaDelete = newRow.insertCell(4);
+            celdaDelete.innerHTML = "<button type=\"button\" class=\"btn btn-info\">Editar</button>"
         }else{
 
         }
