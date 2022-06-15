@@ -13,7 +13,30 @@
     <link href="http://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" type="text/css" /></head>
 <body>
 <div class='container container-app'>
-
+    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #eaedfc;">
+        <div class="container-fluid">
+            <a class="navbar-brand">
+                <img src="../icon.png" width="30" height="30" class="d-inline-block align-top" alt="" loading="lazy">
+                GameShop4 <span style="color: black;">[Lab 8]</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-app" aria-controls="navbar-app" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-star" id="navbar-app">
+                <ul class="navbar-nav">
+                    <li class="nav-item active">
+                        <a class="nav-link"  href="../lista.html">Juego</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../Plataforma/listaPlataforma.html" >Plataformas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="../Distribuidoras/DistribuidorasCrud.html" >Distribuidoras</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
     <div id="content">
         <main>
             <!-- Contenido -->
@@ -21,29 +44,6 @@
                 <h1>Crud de Distribuidoras</h1>
             </div>
             <div class="container-fluid">
-                <!--
-                <form id="form">
-                    <div class="form-group" style="margin-bottom: 30px">
-                        <label>Nombre</label>
-                        <input type="text" class="form-control" name="nombre" id="nombre">
-                        <div class="invalid-feedback" id="alert-nombre" hidden >El nombre debe tener menos de 20 caracteres y mas de 3</div>
-                    </div>
-                    <div class="form-group" style="margin-bottom: 30px">
-                        <label>Descripción</label>
-                        <textarea class="form-control"  id="descripcion" name="descripcion"></textarea>
-                        <div class="invalid-feedback" id="alert-descripcion" hidden>La descripcion debe tener menos de 512 caracteres y mas de 3</div>
-                    </div>
-                    <div class="form-group" style="margin-bottom: 30px">
-                        <label>Web</label>
-                        <input type="text" class="form-control" id="web" name="web">
-                        <div class="invalid-feedback" id="alert-web" hidden>Deffault value</div>
-                    </div>
-                    <div class="form-group" style="margin-bottom: 30px">
-                        <a href="#" class="btn btn-danger" style="margin-right: 20px">Cancelar</a>
-                        <button type="submit" class="btn btn-primary">Añadir</button>
-                        <p id="success"></p>
-                    </div>
-                </form>-->
                 <form id="form" action="">
                     <div class="form-group" style="margin-bottom: 30px">
                         <label for="nombre">Nombre</label>
@@ -61,7 +61,26 @@
                         <p id="alert-web"></p>
                     </div>
                     <div class="form-group" style="margin-bottom: 30px">
-                        <a href="#" class="btn btn-danger" style="margin-right: 20px">Cancelar</a>
+                        <label for="fundacion">Fundacion</label>
+                        <input type="number" class="form-control"  id="fundacion" name="fundacion">
+                        <p id="alert-fundacion"></p>
+                    </div>
+                    <div class="form-group" style="margin-bottom: 30px">
+                        <label for="pais">Pais</label>
+                        <select class="form-select" id="pais">
+                            <option value="">- Seleccione -</option>
+                            <option value="Peru">Peru</option>
+                            <option value="USA">USA</option>
+                            <option value="Japon">Japon</option>
+                            <option value="Alemania">Alemania</option>
+                            <option value="Brazil">Brazil</option>
+                            <option value="Argentina">Argentina</option>
+                            <option value="España">España</option>
+                        </select>
+                        <p id="alert-pais"></p>
+                    </div>
+                    <div class="form-group" style="margin-bottom: 30px">
+                        <a href="#" class="btn btn-danger" style="margin-right: 20px" onclick="limpiar()">Cancelar</a>
                         <button type="submit" class="btn btn-primary" id="botonagregar">Añadir</button>
                         <p id="success"></p>
                     </div>
@@ -70,11 +89,11 @@
                 <table class="table table-striped" id="datatable">
                     <thead>
                     <tr>
-                        <th>#</th>
-                        <th></th>
                         <th style="width: 18%">Nombre</th>
                         <th style="width: 32%">Descripción</th>
                         <th style="width: 20%">Web</th>
+                        <th style="width: 15%">Fundacion</th>
+                        <th style="width: 15%">Pais</th>
                         <th></th>
                         <th></th>
                     </tr>
@@ -108,6 +127,8 @@
         var nombre = document.getElementById("nombre").value;
         var descripcion = document.getElementById("descripcion").value;
         var web = document.getElementById("web").value;
+        var fundacion = document.getElementById("fundacion").value;
+        var pais = document.getElementById("pais").value;
         var r = new RegExp(/(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/);
         let ok = true;
         //console.log(nombre);
@@ -122,6 +143,14 @@
         }
         if(web.length < 3 || web.length>256){
             document.getElementById("alert-web").innerText = "Debe ser menor a 256 caracteres y tiene que ser mayor a 3 caracteres";
+            ok = false;
+        }
+        if(fundacion<1800 || fundacion>2100){
+            document.getElementById("alert-fundacion").innerText = "Debe ser un número, mínimo 1800 y máximo 2100";
+            ok = false;
+        }
+        if(pais==''){
+            document.getElementById("alert-pais").innerText = "Debe seleccionar un pais";
             ok = false;
         }
         if(!r.test(web)){
@@ -144,22 +173,33 @@
                 let celdaWeb = newRow.insertCell(2)
                 let nombreWeb = document.createTextNode(web);
                 celdaWeb.appendChild(nombreWeb);
-                let celdaEdit = newRow.insertCell(3);
+                let celdaFundacion = newRow.insertCell(3)
+                let nombreFundacion= document.createTextNode(fundacion);
+                celdaFundacion.appendChild(nombreFundacion);
+                let celdaPais = newRow.insertCell(4)
+                let nombrePais = document.createTextNode(pais);
+                celdaPais.appendChild(nombrePais);
+                let celdaEdit = newRow.insertCell(5);
                 celdaEdit.innerHTML = "<button type='button' class='btn btn-danger' onclick='eliminar(" + indice + ")'>Eliminar</button>"
-                let celdaDelete = newRow.insertCell(4);
+                let celdaDelete = newRow.insertCell(6);
                 celdaDelete.innerHTML = "<button type=\"button\" class=\"btn btn-info\" onclick='editar(" + indice + ")'>Editar</button>"
+                document.getElementById("success").innerText = "Distribuidora añadida exitosamente!";
             }else{
                 let edit_row =   document.getElementById("datatable").rows[jid].cells;
                 edit_row[0].innerHTML=nombre;
                 edit_row[1].innerHTML=descripcion;
                 edit_row[2].innerHTML=web;
+                edit_row[3].innerHTML=fundacion;
+                edit_row[4].innerHTML=pais;
+                document.getElementById("success").innerText = "Distribuidora editada exitosamente!";
             }
         }else{
-
+            document.getElementById("success").innerText = "Por favor corrija los cambios enviados";
         }
     })
     function eliminar(id){
         document.getElementById("datatable").deleteRow(id);
+        document.getElementById("success").innerText = "Distribuidora eliminada exitosamente";
     }
     function editar(id){
         var row =   document.getElementById("datatable").rows[id].cells;
@@ -167,15 +207,19 @@
         let nombre = row[0].innerHTML;
         let descripcion = row[1].innerHTML;
         let web = row[2].innerHTML;
-        console.log(nombre);
-        console.log(descripcion);
-        console.log(web);
+        let fundacion = row[3].innerHTML;
+        let pais = row[4].innerHTML;
         document.getElementById("nombre").value=nombre;
         document.getElementById("descripcion").value=descripcion;
         document.getElementById("web").value=web;
+        document.getElementById("fundacion").value=fundacion;
+        document.getElementById("pais").value=pais;
         editar_ojo = true;
         let textoBoton = document.getElementById("botonagregar");
         textoBoton.textContent = "Editar";
+    }
+    function limpiar(){
+        document.getElementById("form").reset();
     }
 </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script></div>
