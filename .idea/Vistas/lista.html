@@ -126,9 +126,8 @@
                                     <th style="width: 8%"></th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="cuerpoTabla">
                                 <tr>
-
                                 </tr>
                             </tbody>
                         </table>
@@ -163,8 +162,6 @@
                 let iddistribuidora = document.getElementById("iddistribuidora").value;
                 let image = document.getElementById("image").value;
                 let precio = document.getElementById("precio").value;
-                console.log(nombre);
-                console.log(nombre.length);
 
                 if (nombre.length < 3 || nombre.length > 50) {
                     document.getElementById("nombre").classList.add("is-invalid");
@@ -231,17 +228,47 @@
                     document.getElementById("validarImage").style.display = "none";
                 }
 
+                if (guardar) {
+                    let juego = {};
+                    juego.nombre = nombre;
+                    juego.descripcion = descripcion;
+                    juego.genero = idgenero;
+                    juego.plataforma = idplataforma;
+                    juego.distribuidora = iddistribuidora;
+                    juego.imagen = image;
+                    juego.precio = precio;
+
+                    juegos.push(juego);
+                    mostrarTabla();
+                }
                 return guardar;
             }
 
-            // var juego = {};
-            // juego.nombre = document.getElementById(nombre);
-            // juego.descripcion = document.getElementById(descripcion);
-            // juego.genero = document.getElementById(idgenero);
-            // juego.plataforma = document.getElementById(idplataforma);
-            // juego.distribuidora = document.getElementById(iddistribuidora);
-            // juego.imagen = document.getElementById(image);
-            // juego.precio = document.getElementById(precio);
+            function mostrarTabla() {
+
+                let ini = "<tbody>";
+                let longitud = juegos.length;
+                let juegoIteracion;
+                for (let i = 1; i <= longitud; i++) {
+                    ini = ini + "<tr>";
+                    juegoIteracion = juegos[i-1];
+                    ini = ini + "<td>" + i + "</td>";
+                    ini = ini + "<td><img src='" + juegoIteracion.imagen + "' style=\"height: 100px ;width: 70px\"></td>";
+                    ini = ini + "<td>" + juegoIteracion.nombre + "<span class=\"badge bg-warning text-dark\">" + juegoIteracion.genero + "</span></td>";
+                    ini = ini + "<td>" + juegoIteracion.descripcion + "</td>";
+                    ini = ini + "<td>" + juegoIteracion.plataforma + "</td>";
+                    ini = ini + "<td>" + juegoIteracion.distribuidora + "</td>";
+                    ini = ini + "<td>" + juegoIteracion.precio + "</td>";
+                    ini = ini + "</tr>";
+                }
+                ini = ini + "</tbody>";
+                console.log(ini);
+                document.getElementById("cuerpoTabla").innerHTML = ini;
+
+            }
+
+            var juegos = [];
+
         </script>
 
     </body>
