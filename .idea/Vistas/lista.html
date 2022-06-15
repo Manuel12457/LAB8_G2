@@ -19,68 +19,98 @@
     <body>
         <div class='container container-app'>
             <!-- Form -->
-            <form id="form">
+            <div class="page-header text-center">
+                <h1>Juego</h1>
+            </div>
+
+            <form id="form" onsubmit="return validarForm()">
                 <div class="form-group">
                     <label for="nombre">Nombre</label>
                     <input type="text" class="form-control" id="nombre">
+                    <div id="validarNombre" class="invalid-feedback" style="display: none">
+                        El nombre ingresado debe contener entre 3 y 50 caracteres
+                    </div>
                 </div>
                 <div class="form-group">
                     <label for="descripcion">Descripción</label>
                     <textarea class="form-control" id="descripcion"></textarea>
+                    <div id="validarDescripcion" class="invalid-feedback" style="display: none">
+                        La descripcion ingresada debe contener entre 3 y 512 caracteres
+                    </div>
                 </div>
                 <div class="form-group">
                     <label for="idgenero">Género</label>
                     <select class=" form-select" id="idgenero">
-                        <option value="-1">- Seleccione -</option>
+                        <option value="">- Seleccione -</option>
+                        <option value="Accion">Acción</option>
+                        <option value="Simulacion">Simulacion</option>
+                        <option value="Agilidad">Agilidad</option>
+                        <option value="Accion-Aventura">Acción-Aventura</option>
+                        <option value="RPG">RPG</option>
                     </select>
+                    <div id="validarGenero" class="invalid-feedback" style="display: none">
+                        Seleccione un genero
+                    </div>
                 </div>
                 <div class="form-group">
                     <label for="idplataforma">Plataforma</label>
                     <select class="form-select" id="idplataforma">
-                        <option value="-1">- Seleccione -</option>
-
+                        <option value="">- Seleccione -</option>
+                        <option value="Wii">Wii</option>
+                        <option value="PlayStation 4">PlayStation 4</option>
+                        <option value="Xbox 360">Xbox 360</option>
+                        <option value="Nintendo Switch">Nintendo Switch</option>
+                        <option value="PlayStation 5">PlayStation 5</option>
+                        <option value="Xbox Serie X">Xbox Serie X</option>
+                        <option value="Nintendo Switch Lite">Nintendo Switch Lite</option>
                     </select>
+                    <div id="validarPlataforma" class="invalid-feedback" style="display: none">
+                        Seleccione una plataforma
+                    </div>
                 </div>
                 <div class="form-group">
                     <label for="iddistribuidora">Distribuidora</label>
                     <select class="form-select" id="iddistribuidora">
-                        <option value="-1">- Seleccione -</option>
+                        <option value="">- Seleccione -</option>
+                        <option value="Nintendo">Nintendo</option>
+                        <option value="Electronic Arts">Electronic Arts</option>
+                        <option value="Sony Interactive Entertainment">Sony Interactive Entertainment</option>
+                        <option value="Activision">Activision</option>
+                        <option value="Ubisoft">Ubisoft</option>
+                        <option value="Bandai Namco Entertainment">Bandai Namco Entertainment</option>
                     </select>
+                    <div id="validarDistribuidora" class="invalid-feedback" style="display: none">
+                        Seleccione una distribuidora
+                    </div>
                 </div>
                 <div class="form-group">
                     <label>Imagen URL</label>
                     <input type="text" class="form-control" id="image">
+                    <div id="validarImage" class="invalid-feedback" style="display: none">
+                        La imagen ingresada debe contener entre 10 y 250 caracteres
+                    </div>
                 </div>
                 <div class="form-group">
                     <label>Precio</label>
                     <div class="input-group has-validation">
-
                         <span class="input-group-text" id="inputGroupPrepend3">S/</span>
                         <input type="text" class="form-control" id="precio">
-
-                        <!--                class="form-control is-invalid" id="validationServerUsername" aria-describedby="inputGroupPrepend3 validationServerUsernameFeedback"-->
-                        <!--                <input type="text" class="form-control is-invalid" id="validationServerUsername" aria-describedby="inputGroupPrepend3 validationServerUsernameFeedback" required>-->
-                                        <div id="validarPrecioNum" class="invalid-feedback" style="display: none">
-                                            El precio ingresado debe ser un numero
-                                        </div>
+                        <div id="validarPrecioNum" class="invalid-feedback" style="display: none">
+                            El precio ingresado debe ser un numero
+                        </div>
                         <div id="validarPrecio" class="invalid-feedback" style="display: none">
                             El precio ingresado debe estar comprendido entre los S/50 y S/500
                         </div>
                     </div>
-
-
                 </div>
                 <div class="form-group">
                     <a href="#" class="btn btn-danger">Cancelar</a>
-                    <button type="submit" class="btn btn-primary">Reg/act</button>
+                    <button class="btn btn-primary">Añadir</button> <!--type="submit"-->
                 </div>
             </form>
             <div id="content">
                 <main>
                     <!-- Contenido -->
-                    <div class="page-header text-center">
-                        <h1>Juego</h1>
-                    </div>
                     <div class="container-fluid">
                         <table class="table table-striped">
                             <thead>
@@ -122,66 +152,96 @@
         </div>
 
         <script>
-            let guardar = true;
 
-            let nombre = document.getElementById("nombre").value;
-            let descripcion = document.getElementById("descripcion").value;
-            let idgenero = document.getElementById("idgenero").value;
-            let idplataforma = document.getElementById("idplataforma").value;
-            let iddistribuidora = document.getElementById("iddistribuidora").value;
-            let image = document.getElementById("image").value;
-            let precio = document.getElementById("precio").value;
+            function validarForm() {
+                let guardar = true;
 
-            if (nombre.length < 3 && nombre.length > 50) {
-                nombre.innerHTML = "";
-            } else {
-                nombre.innerHTML = "<input type=\"text\" class=\"form-control\" id=\"image\">";
-            }
-            if (descripcion.length < 3 && descripcion.length > 512) {
-                descripcion.innerHTML = "";
-            } else {
-                descripcion.innerHTML = "";
-            }
-            if (isNaN(precio)) {
-                precio.innerHTML = "";
-                document.getElementById("validarPrecioN")
-            } else {
-                precio.innerHTML = "<input type=\"text\" class=\"form-control\" id=\"image\">";
-            }
-            if (precio < 50 && precio > 550) {
-                precio.innerHTML = "";
-            } else {
-                precio.innerHTML = "<input type=\"text\" class=\"form-control\" id=\"image\">";
-            }
-            if (idgenero == "") {
-                idgenero.innerHTML = "";
-            } else {
-                idgenero.innerHTML = "";
-            }
-            if (idplataforma == "") {
-                idplataforma.innerHTML = "";
-            } else {
-                idplataforma.innerHTML = "";
-            }
-            if (iddistribuidora == "") {
-                iddistribuidora.innerHTML = "";
-            } else {
-                iddistribuidora.innerHTML = "";
-            }
-            if (image.length < 10 && image.length > 256) {
-                image.innerHTML = "";
-            } else {
-                image.innerHTML = "<input type=\"text\" class=\"form-control\" id=\"image\">";
+                let nombre = document.getElementById("nombre").value;
+                let descripcion = document.getElementById("descripcion").value;
+                let idgenero = document.getElementById("idgenero").value;
+                let idplataforma = document.getElementById("idplataforma").value;
+                let iddistribuidora = document.getElementById("iddistribuidora").value;
+                let image = document.getElementById("image").value;
+                let precio = document.getElementById("precio").value;
+                console.log(nombre);
+                console.log(nombre.length);
+
+                if (nombre.length < 3 || nombre.length > 50) {
+                    document.getElementById("nombre").classList.add("is-invalid");
+                    document.getElementById("validarNombre").style.display = "block";
+                    guardar = false;
+                } else {
+                    document.getElementById("nombre").classList.remove("is-invalid");
+                    document.getElementById("validarNombre").style.display = "none";
+                }
+                if (descripcion.length < 3 || descripcion.length > 512) {
+                    document.getElementById("descripcion").classList.add("is-invalid");
+                    document.getElementById("validarDescripcion").style.display = "block";
+                    guardar = false;
+                } else {
+                    document.getElementById("descripcion").classList.remove("is-invalid");
+                    document.getElementById("validarDescripcion").style.display = "none";
+                }
+                if (isNaN(precio)) {
+                    document.getElementById("precio").classList.add("is-invalid");
+                    document.getElementById("validarPrecioNum").style.display = "block";
+                    guardar = false;
+                } else {
+                    if (precio < 50 || precio > 550) {
+                        document.getElementById("precio").classList.add("is-invalid");
+                        document.getElementById("validarPrecio").style.display = "block";
+                        guardar = false;
+                    } else {
+                        document.getElementById("validarPrecioNum").style.display = "none";
+                        document.getElementById("validarPrecio").style.display = "none";
+
+                        document.getElementById("precio").classList.remove("is-invalid");
+                    }
+                }
+                if (idgenero == "") {
+                    document.getElementById("idgenero").classList.add("is-invalid");
+                    document.getElementById("validarGenero").style.display = "block";
+                    guardar = false;
+                } else {
+                    document.getElementById("idgenero").classList.remove("is-invalid");
+                    document.getElementById("validarGenero").style.display = "none";
+                }
+                if (idplataforma == "") {
+                    document.getElementById("idplataforma").classList.add("is-invalid");
+                    document.getElementById("validarPlataforma").style.display = "block";
+                    guardar = false;
+                } else {
+                    document.getElementById("idplataforma").classList.remove("is-invalid");
+                    document.getElementById("validarPlataforma").style.display = "none";
+                }
+                if (iddistribuidora == "") {
+                    document.getElementById("iddistribuidora").classList.add("is-invalid");
+                    document.getElementById("validarDistribuidora").style.display = "block";
+                    guardar = false;
+                } else {
+                    document.getElementById("iddistribuidora").classList.remove("is-invalid");
+                    document.getElementById("validarDistribuidora").style.display = "none";
+                }
+                if (image.length < 10 || image.length > 256) {
+                    document.getElementById("image").classList.add("is-invalid");
+                    document.getElementById("validarImage").style.display = "block";
+                    guardar = false;
+                } else {
+                    document.getElementById("image").classList.remove("is-invalid");
+                    document.getElementById("validarImage").style.display = "none";
+                }
+
+                return guardar;
             }
 
-            var juego = {};
-            juego.nombre = document.getElementById(nombre);
-            juego.descripcion = document.getElementById(descripcion);
-            juego.genero = document.getElementById(idgenero);
-            juego.plataforma = document.getElementById(idplataforma);
-            juego.distribuidora = document.getElementById(iddistribuidora);
-            juego.imagen = document.getElementById(image);
-            juego.precio = document.getElementById(precio);
+            // var juego = {};
+            // juego.nombre = document.getElementById(nombre);
+            // juego.descripcion = document.getElementById(descripcion);
+            // juego.genero = document.getElementById(idgenero);
+            // juego.plataforma = document.getElementById(idplataforma);
+            // juego.distribuidora = document.getElementById(iddistribuidora);
+            // juego.imagen = document.getElementById(image);
+            // juego.precio = document.getElementById(precio);
         </script>
 
     </body>
