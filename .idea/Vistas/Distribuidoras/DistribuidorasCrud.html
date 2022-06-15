@@ -44,7 +44,7 @@
                         <p id="success"></p>
                     </div>
                 </form>-->
-                <form id="form">
+                <form id="form" action="">
                     <div class="form-group" style="margin-bottom: 30px">
                         <label for="nombre">Nombre</label>
                         <input type="text" class="form-control" id="nombre">
@@ -62,7 +62,7 @@
                     </div>
                     <div class="form-group" style="margin-bottom: 30px">
                         <a href="#" class="btn btn-danger" style="margin-right: 20px">Cancelar</a>
-                        <button type="submit" class="btn btn-primary">Añadir</button>
+                        <button type="submit" class="btn btn-primary" id="botonagregar">Añadir</button>
                         <p id="success"></p>
                     </div>
                 </form>
@@ -97,17 +97,21 @@
     </div>
 </div>
 <script>
-    var table = document.getElementById("datatable");
-    //validacion del formulario
-    var nombre = document.getElementById("nombre");
-    var descripcion = document.getElementById("descripcion");
-    var web = document.getElementById("web");
-    //validacion de expresion regular
-    var r = new RegExp(/(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/)
-    let ok = true;
     const form = document.getElementById("form");
+    var indice;
+    var editar_ojo = false;
+    var jid;
     form.addEventListener("submit",e=>{
         e.preventDefault();
+        var table = document.getElementById("datatable");
+        //validacion del formulario
+        var nombre = document.getElementById("nombre").value;
+        var descripcion = document.getElementById("descripcion").value;
+        var web = document.getElementById("web").value;
+        var r = new RegExp(/(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/);
+        let ok = true;
+        //console.log(nombre);
+        //console.log(web);
         if(nombre.length < 3 || nombre.length>20){
             document.getElementById("alert-nombre").innerText="El nombre debe de contener entre 3 y 20 caracteres";
             ok = false;
@@ -120,30 +124,59 @@
             document.getElementById("alert-web").innerText = "Debe ser menor a 256 caracteres y tiene que ser mayor a 3 caracteres";
             ok = false;
         }
-        if(r.test(web)){
+        if(!r.test(web)){
             document.getElementById("alert-web").innerText = "Debe ser una url";
             ok = false;
         }
         if(ok){
-            //insercion dentro de la tabla
-            let  newRow = table.insertRow(-1);
-            let celdaNombre = newRow.insertCell(0)
-            let nombretexto = document.createTextNode(nombre);
-            celdaNombre.appendChild(nombretexto);
-            let celdaDescripcion = newRow.insertCell(1);
-            let nombreDescripcion = document.createTextNode(descripcion);
-            celdaNombre.appendChild(nombreDescripcion);
-            let celdaWeb = newRow.insertCell(2)
-            let nombreWeb = document.createTextNode(web);
-            celdaNombre.appendChild(nombreWeb);
-            let celdaEdit = newRow.insertCell(3);
-            celdaEdit.innerHTML = "<button type=\"button\" class=\"btn btn-danger\">Eliminar</button>"
-            let celdaDelete = newRow.insertCell(4);
-            celdaDelete.innerHTML = "<button type=\"button\" class=\"btn btn-info\">Editar</button>"
+            console.log(editar_ojo)
+            if(!editar_ojo) {
+                //insercion dentro de la tabla
+                let newRow = table.insertRow(-1);
+                indice = newRow.rowIndex;
+                //console.log(indice);
+                let celdaNombre = newRow.insertCell(0)
+                let nombretexto = document.createTextNode(nombre);
+                celdaNombre.appendChild(nombretexto);
+                let celdaDescripcion = newRow.insertCell(1);
+                let nombreDescripcion = document.createTextNode(descripcion);
+                celdaDescripcion.appendChild(nombreDescripcion);
+                let celdaWeb = newRow.insertCell(2)
+                let nombreWeb = document.createTextNode(web);
+                celdaWeb.appendChild(nombreWeb);
+                let celdaEdit = newRow.insertCell(3);
+                celdaEdit.innerHTML = "<button type='button' class='btn btn-danger' onclick='eliminar(" + indice + ")'>Eliminar</button>"
+                let celdaDelete = newRow.insertCell(4);
+                celdaDelete.innerHTML = "<button type=\"button\" class=\"btn btn-info\" onclick='editar(" + indice + ")'>Editar</button>"
+            }else{
+                let edit_row =   document.getElementById("datatable").rows[jid].cells;
+                edit_row[0].innerHTML=nombre;
+                edit_row[1].innerHTML=descripcion;
+                edit_row[2].innerHTML=web;
+            }
         }else{
 
         }
     })
+    function eliminar(id){
+        document.getElementById("datatable").deleteRow(id);
+    }
+    function editar(id){
+        var row =   document.getElementById("datatable").rows[id].cells;
+        jid = id;
+        let nombre = row[0].innerHTML;
+        let descripcion = row[1].innerHTML;
+        let web = row[2].innerHTML;
+        console.log(nombre);
+        console.log(descripcion);
+        console.log(web);
+        document.getElementById("nombre").value=nombre;
+        document.getElementById("descripcion").value=descripcion;
+        document.getElementById("web").value=web;
+        editar_ojo = true;
+        let textoBoton = document.getElementById("botonagregar");
+        textoBoton.textContent = "Editar";
+    }
 </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script></div>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
