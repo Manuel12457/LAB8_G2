@@ -21,6 +21,7 @@
                 <h1>Crud de Distribuidoras</h1>
             </div>
             <div class="container-fluid">
+                <!--
                 <form id="form">
                     <div class="form-group" style="margin-bottom: 30px">
                         <label>Nombre</label>
@@ -36,6 +37,28 @@
                         <label>Web</label>
                         <input type="text" class="form-control" id="web" name="web">
                         <div class="invalid-feedback" id="alert-web" hidden>Deffault value</div>
+                    </div>
+                    <div class="form-group" style="margin-bottom: 30px">
+                        <a href="#" class="btn btn-danger" style="margin-right: 20px">Cancelar</a>
+                        <button type="submit" class="btn btn-primary">Añadir</button>
+                        <p id="success"></p>
+                    </div>
+                </form>-->
+                <form id="form">
+                    <div class="form-group" style="margin-bottom: 30px">
+                        <label for="nombre">Nombre</label>
+                        <input type="text" class="form-control" id="nombre">
+                        <p id="alert-nombre"></p>
+                    </div>
+                    <div class="form-group" style="margin-bottom: 30px">
+                        <label for="descripcion">Descripción</label>
+                        <input class="form-control" id="descripcion" name="descripcion">
+                        <p id="alert-descripcion"></p>
+                    </div>
+                    <div class="form-group" style="margin-bottom: 30px">
+                        <label for="web">URL</label>
+                        <input type="text" class="form-control"  id="web" name="web">
+                        <p id="alert-web"></p>
                     </div>
                     <div class="form-group" style="margin-bottom: 30px">
                         <a href="#" class="btn btn-danger" style="margin-right: 20px">Cancelar</a>
@@ -85,15 +108,15 @@
     const form = document.getElementById("form");
     form.addEventListener("submit",e=>{
         e.preventDefault();
-        if(!(nombre.length>3 && nombre.length<20)){
-            document.getElementById("alert-nombre").hidden="false";
+        if(nombre.length < 3 || nombre.length>20 || nombre===''){
+            document.getElementById("alert-nombre").innerText="El nombre debe de contener entre 3 y 20 caracteres";
             ok = false;
         }
-        if(!(descripcion.length>3 && descripcion.length<512)){
-            document.getElementById("alert-descripcion").hidden="true";
+        if(descripcion.length < 3 || descripcion.length>512 || descripcion===''){
+            document.getElementById("alert-descripcion").innerText="El nombre debe de contener entre 3 y 512 caracteres";
             ok = false;
         }
-        if(!(web.length>3 && web.length<256)){
+        if(web.length < 3 || web.length>256 || web===''){
             document.getElementById("alert-web").innerText = "Debe ser menor a 256 caracteres y tiene que ser mayor a 3 caracteres";
             ok = false;
         }
